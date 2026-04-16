@@ -1,0 +1,198 @@
+openapi: 3.0.3
+info:
+  title: Beauty Accessories System API
+  version: 1.0.0
+  description: API for products, suppliers, employees, customers, sales, purchases, inventory, and audit logs.
+servers:
+  - url: http://localhost:4000
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    LoginRequest:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+        category_id:
+          type: integer
+        name:
+          type: string
+        sku:
+          type: string
+        sale_price:
+          type: number
+        stock_quantity:
+          type: integer
+    PurchaseRequest:
+      type: object
+      required: [supplier_id, purchase_date, subtotal, total_amount, items]
+      properties:
+        supplier_id:
+          type: integer
+        purchase_date:
+          type: string
+          format: date-time
+        subtotal:
+          type: number
+        discount:
+          type: number
+        tax:
+          type: number
+        total_amount:
+          type: number
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              product_id:
+                type: integer
+              quantity:
+                type: integer
+              unit_cost:
+                type: number
+              line_total:
+                type: number
+    SaleRequest:
+      type: object
+      required: [sale_date, subtotal, total_amount, items]
+      properties:
+        customer_id:
+          type: integer
+          nullable: true
+        sale_date:
+          type: string
+          format: date-time
+        subtotal:
+          type: number
+        discount:
+          type: number
+        tax:
+          type: number
+        total_amount:
+          type: number
+        payment_status:
+          type: string
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              product_id:
+                type: integer
+              quantity:
+                type: integer
+              unit_price:
+                type: number
+              line_total:
+                type: number
+security:
+  - bearerAuth: []
+paths:
+  /api/v1/auth/login:
+    post:
+      summary: Login and receive JWT token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+  /api/v1/categories:
+    get:
+      summary: List categories
+      responses:
+        '200':
+          description: Categories returned
+    post:
+      summary: Create category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '201':
+          description: Category created
+  /api/v1/products:
+    get:
+      summary: List products
+      responses:
+        '200':
+          description: Products returned
+    post:
+      summary: Create product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          description: Product created
+  /api/v1/purchases:
+    post:
+      summary: Create purchase and increase stock
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseRequest'
+      responses:
+        '201':
+          description: Purchase created
+  /api/v1/sales:
+    post:
+      summary: Create sale and decrease stock
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaleRequest'
+      responses:
+        '201':
+          description: Sale created
+  /api/v1/inventory/adjust:
+    post:
+      summary: Manually adjust product stock
+      responses:
+        '201':
+          description: Stock adjusted
+  /api/v1/activity-logs:
+    get:
+      summary: List activity logs
+      responses:
+        '200':
+          description: Logs returned
+
