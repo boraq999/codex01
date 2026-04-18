@@ -137,6 +137,36 @@ CREATE TABLE IF NOT EXISTS sale_items (
   CONSTRAINT fk_sale_items_product FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
+CREATE TABLE IF NOT EXISTS sale_returns (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  return_no VARCHAR(100) NOT NULL UNIQUE,
+  sale_id BIGINT UNSIGNED NOT NULL,
+  return_date DATETIME NOT NULL,
+  reason TEXT NULL,
+  total_amount DECIMAL(12, 2) NOT NULL DEFAULT 0,
+  status ENUM('completed', 'cancelled') NOT NULL DEFAULT 'completed',
+  created_by BIGINT UNSIGNED NULL,
+  notes TEXT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_sale_returns_sale FOREIGN KEY (sale_id) REFERENCES sales(id),
+  CONSTRAINT fk_sale_returns_user FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS sale_return_items (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  sale_return_id BIGINT UNSIGNED NOT NULL,
+  sale_item_id BIGINT UNSIGNED NOT NULL,
+  product_id BIGINT UNSIGNED NOT NULL,
+  quantity INT NOT NULL,
+  unit_price DECIMAL(12, 2) NOT NULL,
+  line_total DECIMAL(12, 2) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_sale_return_items_return FOREIGN KEY (sale_return_id) REFERENCES sale_returns(id) ON DELETE CASCADE,
+  CONSTRAINT fk_sale_return_items_sale_item FOREIGN KEY (sale_item_id) REFERENCES sale_items(id),
+  CONSTRAINT fk_sale_return_items_product FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
 CREATE TABLE IF NOT EXISTS inventory_transactions (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   product_id BIGINT UNSIGNED NOT NULL,
@@ -169,7 +199,7 @@ CREATE INDEX idx_products_sku ON products(sku);
 CREATE INDEX idx_products_barcode ON products(barcode);
 CREATE INDEX idx_purchases_purchase_no ON purchases(purchase_no);
 CREATE INDEX idx_sales_sale_no ON sales(sale_no);
+CREATE INDEX idx_sale_returns_no ON sale_returns(return_no);
 CREATE INDEX idx_inventory_product_id ON inventory_transactions(product_id);
 CREATE INDEX idx_activity_entity ON activity_logs(entity_type, entity_id);
 CREATE INDEX idx_users_username ON users(username);
-

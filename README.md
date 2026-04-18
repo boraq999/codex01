@@ -18,6 +18,10 @@ npm run dev
 
 - `username`: `admin`
 - `password`: `Admin@123`
+- `username`: `manager`
+- `password`: `Admin@123`
+- `username`: `cashier`
+- `password`: `Admin@123`
 
 ## التوثيق
 
@@ -34,7 +38,9 @@ npm run dev
 - Products
 - Purchases
 - Sales
+- Sale Returns
 - Inventory Adjustments
+- Reports
 - Activity Logs
 
 ## ملاحظات
@@ -42,3 +48,4 @@ npm run dev
 - جميع المسارات تحت `/api/v1`
 - جميع المسارات محمية بـ `JWT` ما عدا `/api/v1/auth/login`
 - عمليات الشراء والبيع والتعديل اليدوي للمخزون تسجل حركات في `inventory_transactions` و`activity_logs`
+- عمليات المرتجعات (`returns`) تعيد المخزون وتُسجل الحركة بشكل تلقائي

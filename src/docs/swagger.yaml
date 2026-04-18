@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Beauty Accessories System API
   version: 1.0.0
-  description: API for products, suppliers, employees, customers, sales, purchases, inventory, and audit logs.
+  description: API for products, suppliers, employees, customers, sales, purchases, returns, inventory, reports, and audit logs.
 servers:
   - url: http://localhost:4000
 components:
@@ -109,6 +109,34 @@ components:
                 type: number
               line_total:
                 type: number
+    SaleReturnRequest:
+      type: object
+      required: [sale_id, return_date, total_amount, items]
+      properties:
+        sale_id:
+          type: integer
+        return_date:
+          type: string
+          format: date-time
+        reason:
+          type: string
+        total_amount:
+          type: number
+        notes:
+          type: string
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              sale_item_id:
+                type: integer
+              quantity:
+                type: integer
+              unit_price:
+                type: number
+              line_total:
+                type: number
 security:
   - bearerAuth: []
 paths:
@@ -142,6 +170,28 @@ paths:
       responses:
         '201':
           description: Category created
+  /api/v1/suppliers:
+    get:
+      summary: List suppliers
+      responses:
+        '200':
+          description: Suppliers returned
+    post:
+      summary: Create supplier
+      responses:
+        '201':
+          description: Supplier created
+  /api/v1/customers:
+    get:
+      summary: List customers
+      responses:
+        '200':
+          description: Customers returned
+    post:
+      summary: Create customer
+      responses:
+        '201':
+          description: Customer created
   /api/v1/products:
     get:
       summary: List products
@@ -160,6 +210,11 @@ paths:
         '201':
           description: Product created
   /api/v1/purchases:
+    get:
+      summary: List purchases
+      responses:
+        '200':
+          description: Purchases returned
     post:
       summary: Create purchase and increase stock
       requestBody:
@@ -172,6 +227,11 @@ paths:
         '201':
           description: Purchase created
   /api/v1/sales:
+    get:
+      summary: List sales
+      responses:
+        '200':
+          description: Sales returned
     post:
       summary: Create sale and decrease stock
       requestBody:
@@ -189,10 +249,66 @@ paths:
       responses:
         '201':
           description: Stock adjusted
+  /api/v1/returns:
+    get:
+      summary: List sale returns
+      responses:
+        '200':
+          description: Returns returned
+    post:
+      summary: Create sale return and increase stock
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaleReturnRequest'
+      responses:
+        '201':
+          description: Return created
+  /api/v1/reports/dashboard:
+    get:
+      summary: Get dashboard summary
+      responses:
+        '200':
+          description: Dashboard summary returned
+  /api/v1/reports/sales:
+    get:
+      summary: Get sales report by date range
+      parameters:
+        - in: query
+          name: from
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: to
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Sales report returned
+  /api/v1/reports/purchases:
+    get:
+      summary: Get purchases report by date range
+      parameters:
+        - in: query
+          name: from
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: to
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Purchases report returned
   /api/v1/activity-logs:
     get:
       summary: List activity logs
       responses:
         '200':
           description: Logs returned
-

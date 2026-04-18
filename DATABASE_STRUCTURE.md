@@ -60,6 +60,8 @@ beauty_accessories_system
 - `purchase_items`
 - `sales`
 - `sale_items`
+- `sale_returns`
+- `sale_return_items`
 
 ### 4. جداول التتبع والتدقيق
 - `activity_logs`
@@ -375,6 +377,45 @@ beauty_accessories_system
 
 ---
 
+## 13. جدول مرتجعات المبيعات `sale_returns`
+يمثل رأس عملية إرجاع الأصناف من فاتورة بيع سابقة.
+
+### الحقول المقترحة
+
+| الحقل | النوع | الوصف |
+|---|---|---|
+| `id` | `BIGINT` | المعرف الرئيسي |
+| `return_no` | `VARCHAR(100)` | رقم المرتجع |
+| `sale_id` | `BIGINT` | فاتورة البيع الأصلية |
+| `return_date` | `DATETIME` | تاريخ المرتجع |
+| `reason` | `TEXT` | سبب الإرجاع |
+| `total_amount` | `DECIMAL(12,2)` | إجمالي المرتجع |
+| `status` | `ENUM('completed','cancelled')` | حالة المرتجع |
+| `created_by` | `BIGINT` | منفذ العملية |
+| `notes` | `TEXT` | ملاحظات |
+| `created_at` | `DATETIME` | تاريخ الإنشاء |
+| `updated_at` | `DATETIME` | تاريخ التحديث |
+
+---
+
+## 14. جدول تفاصيل المرتجعات `sale_return_items`
+يحفظ تفاصيل المنتجات المرتجعة المرتبطة بكل مرتجع.
+
+### الحقول المقترحة
+
+| الحقل | النوع | الوصف |
+|---|---|---|
+| `id` | `BIGINT` | المعرف الرئيسي |
+| `sale_return_id` | `BIGINT` | مرجع إلى المرتجع |
+| `sale_item_id` | `BIGINT` | مرجع لسطر البيع الأصلي |
+| `product_id` | `BIGINT` | المنتج المرتجع |
+| `quantity` | `INT` | الكمية المرتجعة |
+| `unit_price` | `DECIMAL(12,2)` | سعر الوحدة وقت البيع |
+| `line_total` | `DECIMAL(12,2)` | إجمالي السطر |
+| `created_at` | `DATETIME` | تاريخ الإنشاء |
+
+---
+
 ## العلاقات بين الجداول
 
 ### العلاقات الرئيسية
@@ -544,4 +585,3 @@ all important entities
 2. إنشاء العلاقات الفعلية `FOREIGN KEYS`
 3. تجهيز `seed.sql` ببيانات تجريبية
 4. البدء في بناء `models` و`services` اعتمادًا على هذا التصميم
-
