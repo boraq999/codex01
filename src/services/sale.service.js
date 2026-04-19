@@ -103,9 +103,69 @@ const create = async (payload, userId) => {
   });
 };
 
+const cancel = async (id, userId) => {
+  return withTransaction(async (connection) => {
+    const sale = await saleModel.findById(id);
+    if (!sale) {
+      throw new AppError("Sale not found.", 404);
+    }
+
+    if (sale.status === "cancelled") {
+      throw new AppError("Sale is already cancelled.", 400);
+    }
+
+    const items = await saleItemModel.findBySaleId(id);
+
+    for (const item of items) {
+      const product = await productModel.findById(item.product_id);
+      if (!product) continue;
+
+      const stockBefore = product.stock_quantity;
+      const stockAfter = stockBefore + item.quantity;
+
+      await productModel.update(
+        product.id,
+        { stock_quantity: stockAfter },
+        connection
+      );
+
+      await inventoryTransactionModel.create(
+        {
+          product_id: product.id,
+          reference_type: "sale",
+          reference_id: sale.id,
+          transaction_type: "sale_out",
+          quantity: -item.quantity,
+          stock_before: stockBefore,
+          stock_after: stockAfter,
+          notes: `Sale ${sale.sale_no} cancelled - stock reversed`,
+          created_by: userId || null,
+        },
+        connection
+      );
+    }
+
+    await saleModel.update(id, { status: "cancelled" }, connection);
+
+    await activityLogService.create(
+      {
+        entity_type: "sale",
+        entity_id: sale.id,
+        action: "cancelled",
+        description: `Sale ${sale.sale_no} cancelled and inventory reversed.`,
+        performed_by: userId || null,
+      },
+      connection
+    );
+
+    return getById(id);
+  });
+};
+
 module.exports = {
   list,
   getById,
   create,
+  cancel,
 };
 

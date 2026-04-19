@@ -27,5 +27,13 @@ module.exports = {
       data,
     });
   }),
+
+  cancel: asyncHandler(async (req, res) => {
+    const data = await saleService.cancel(Number(req.params.id), req.user?.id);
+    return sendResponse(res, {
+      message: "Sale cancelled successfully.",
+      data,
+    });
+  }),
 };
 

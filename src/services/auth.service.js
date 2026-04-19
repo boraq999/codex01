@@ -34,12 +34,38 @@ const login = async ({ username, password }) => {
       username: user.username,
       role: user.role,
       employee_id: user.employee_id,
-      employee_name: user.employee_name,
+      full_name: user.employee_name,
+    },
+  };
+};
+
+const refreshToken = async (user) => {
+  // Generate new token with same payload
+  const token = jwt.sign(
+    {
+      id: user.id,
+      employee_id: user.employee_id,
+      username: user.username,
+      role: user.role,
+    },
+    env.jwt.secret,
+    { expiresIn: env.jwt.expiresIn }
+  );
+
+  return {
+    token,
+    user: {
+      id: user.id,
+      username: user.username,
+      role: user.role,
+      employee_id: user.employee_id,
+      full_name: user.employee_name,
     },
   };
 };
 
 module.exports = {
   login,
+  refreshToken,
 };
 

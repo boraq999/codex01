@@ -9,5 +9,6 @@ const router = express.Router();
 router.get("/", roleMiddleware("admin", "manager"), controller.list);
 router.get("/:id", roleMiddleware("admin", "manager"), controller.getById);
 router.post("/", roleMiddleware("admin", "manager"), validate(schema), controller.create);
+router.patch("/:id/cancel", roleMiddleware("admin", "manager"), controller.cancel);
 
 module.exports = router;

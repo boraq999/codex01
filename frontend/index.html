@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codex POS | إدارة الإكسسوارات ومواد التجميل</title>
+    <!-- Fonts: Tajawal for Arabic, Outfit for English -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/additions.css">
+</head>
+<body class="dark-theme">
+    
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar glass-panel">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fa-solid fa-gem gradient-text"></i>
+                    <h2>Codex<span class="gradient-text">POS</span></h2>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-target="dashboard">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>لوحة القيادة</span>
+                </a>
+                <a href="#" class="nav-item" data-target="categories">
+                    <i class="fa-solid fa-tags"></i>
+                    <span>الفئات</span>
+                </a>
+                <a href="#" class="nav-item" data-target="products">
+                    <i class="fa-solid fa-box-open"></i>
+                    <span>المنتجات</span>
+                </a>
+                <a href="#" class="nav-item" data-target="customers">
+                    <i class="fa-solid fa-users"></i>
+                    <span>العملاء</span>
+                </a>
+                <a href="#" class="nav-item" data-target="suppliers">
+                    <i class="fa-solid fa-truck-field"></i>
+                    <span>الموردين</span>
+                </a>
+                <a href="#" class="nav-item" data-target="sales">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>المبيعات</span>
+                </a>
+                <a href="#" class="nav-item" data-target="purchases">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>المشتريات</span>
+                </a>
+                <a href="#" class="nav-item" data-target="returns">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    <span>المرتجعات</span>
+                </a>
+                <a href="#" class="nav-item" data-target="inventory">
+                    <i class="fa-solid fa-warehouse"></i>
+                    <span>المخزون</span>
+                </a>
+                <a href="#" class="nav-item" data-target="employees">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span>الموظفين</span>
+                </a>
+                <a href="#" class="nav-item" data-target="reports">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>التقارير</span>
+                </a>
+                <a href="#" class="nav-item" data-target="activity-logs">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>سجل الأنشطة</span>
+                </a>
+                <a href="#" class="nav-item" data-target="api-tester">
+                    <i class="fa-solid fa-plug-circle-check"></i>
+                    <span>مختبر API</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Topbar -->
+            <header class="topbar glass-panel">
+                <div class="header-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="ابحث في المنظومة...">
+                </div>
+                <div class="header-widgets">
+                    <button id="theme-toggle" class="icon-btn" title="تغيير المظهر">
+                        <i class="fa-solid fa-sun"></i>
+                    </button>
+                    <div class="user-profile">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="Profile" class="avatar">
+                        <div class="user-info">
+                            <h4>أحمد محمد</h4>
+                            <span>المدير العام</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard View -->
+            <div id="view-dashboard" class="view-section active fade-in">
+                <div class="section-header">
+                    <h1>نظرة عامة</h1>
+                    <p>ملخص سريع لحالة النشاط التجاري اليوم</p>
+                </div>
+                
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card glass-panel">
+                        <div class="stat-icon purple-gradient">
+                            <i class="fa-solid fa-coins"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>المبيعات اليومية</h3>
+                            <h2>$1,240.00</h2>
+                            <span class="trend up"><i class="fa-solid fa-arrow-trend-up"></i> +12.5%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card glass-panel">
+                        <div class="stat-icon pink-gradient">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>الطلبات</h3>
+                            <h2>45</h2>
+                            <span class="trend up"><i class="fa-solid fa-arrow-trend-up"></i> +5.2%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card glass-panel">
+                        <div class="stat-icon yellow-gradient">
+                            <i class="fa-solid fa-dials"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>حركات المخزون</h3>
+                            <h2>128</h2>
+                            <span class="trend neutral">طبيعي</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card glass-panel">
+                        <div class="stat-icon blue-gradient">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>منتجات منخفضة</h3>
+                            <h2>8</h2>
+                            <span class="trend down"><i class="fa-solid fa-circle-exclamation"></i> يحتاج إعادة طلب</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity & Quick Tester -->
+                <div class="dashboard-widgets">
+                    <div class="widget glass-panel">
+                        <h3>سجل الحركات الأخير</h3>
+                        <ul class="activity-list">
+                            <li>
+                                <div class="activity-icon bg-success-light">
+                                    <i class="fa-solid fa-check text-success"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>عملية بيع جديدة #SAL-102</h4>
+                                    <span>قبل دقيقتين بواسطة أحمد محمد</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="activity-icon bg-warning-light">
+                                    <i class="fa-solid fa-box text-warning"></i>
+                                </div>
+                                <div class="activity-info">
+                                    <h4>تحديث مخزون: عطر أزهار</h4>
+                                    <span>قبل 15 دقيقة بواسطة مصطفى خالد</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="widget glass-panel">
+                        <h3>حالة النظام المباشرة</h3>
+                        <div class="system-status">
+                            <div class="status-indicator online"></div>
+                            <span>الخادم متصل (Backend Running)</span>
+                        </div>
+                        <button id="btn-test-connection" class="btn btn-primary mt-3 w-100">
+                            <i class="fa-solid fa-rotate"></i> فحص الاتصال بالـ API
+                        </button>
+                        <div id="connection-result" class="api-result-box mt-3 hidden"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Tester View -->
+            <div id="view-api-tester" class="view-section fade-in" style="display: none;">
+                <div class="section-header">
+                    <h1>مختبر الـ API</h1>
+                    <p>واجهة لتجربة إرسال الطلبات إلى الخادم وفحص البيانات</p>
+                </div>
+
+                <div class="tester-layout">
+                    <div class="tester-controls glass-panel">
+                        <h3>إعداد الطلب</h3>
+                        <div class="form-group">
+                            <label>URL Endpoint</label>
+                            <div class="input-group">
+                                <span class="input-prefix">http://localhost:4000/api/v1/</span>
+                                <select id="api-endpoint" style="flex-grow: 1; background: transparent; border: none; padding: 12px; color: inherit; font-family: monospace; direction: ltr; cursor: pointer; outline: none;">
+                                    <option value="auth/login">auth/login (تسجيل دخول)</option>
+                                    <option value="auth/register">auth/register (تسجيل حساب)</option>
+                                    <option value="products" selected>products (المنتجات)</option>
+                                    <option value="categories">categories (التصنيفات)</option>
+                                    <option value="suppliers">suppliers (الموردين)</option>
+                                    <option value="employees">employees (الموظفين)</option>
+                                    <option value="customers">customers (العملاء)</option>
+                                    <option value="purchases">purchases (المشتريات)</option>
+                                    <option value="sales">sales (المبيعات)</option>
+                                    <option value="returns">returns (المرتجعات)</option>
+                                    <option value="inventory">inventory (المخزون)</option>
+                                    <option value="activity-logs">activity-logs (سجل الحركات)</option>
+                                    <option value="reports">reports (التقارير)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Method</label>
+                            <select id="api-method" class="custom-select">
+                                <option value="GET">GET (جلب بيانات)</option>
+                                <option value="POST">POST (إضافة جديد)</option>
+                                <option value="PUT">PUT (تحديث كامل)</option>
+                                <option value="PATCH">PATCH (تحديث جزئي)</option>
+                                <option value="DELETE">DELETE (حذف)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Payload (JSON) - لتحديث أو إضافة بيانات</label>
+                            <textarea id="api-payload" rows="6" class="code-editor" placeholder='{&#10;  "name": "كريم مرطب",&#10;  "price": 45.00&#10;}'></textarea>
+                        </div>
+                        
+                        <button id="btn-make-request" class="btn btn-gradient w-100">
+                            <i class="fa-solid fa-paper-plane"></i> إرسال الطلب
+                        </button>
+                    </div>
+
+                    <div class="tester-response glass-panel">
+                        <div class="response-header">
+                            <h3>استجابة الخادم (Response)</h3>
+                            <span id="response-status" class="badge badge-default">في انتظار الطلب...</span>
+                        </div>
+                        <div class="response-body">
+                            <pre id="api-response-content" class="code-viewer">سيتم عرض الـ JSON هنا...</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View Placeholders Replaced with Layouts -->
+            
+            <!-- Categories View -->
+            <div id="view-categories" class="view-section fade-in" style="display: none;">
+                <div class="section-header">
+                    <h1>الفئات</h1>
+                    <p>إدارة فئات المنتجات والتصنيفات</p>
+                </div>
+                <div class="view-actions">
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" placeholder="بحث عن فئة...">
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('categoryModal')">
+                        <i class="fa-solid fa-plus"></i> إضافة فئة
+                    </button>
+                </div>
+                <div class="table-container glass-panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>اسم الفئة</th>
+                                <th>الوصف</th>
+                                <th>الحالة</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categories-table-body">
+                            <!-- Dynamic data -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Products View -->
+            <div id="view-products" class="view-section fade-in" style="display: none;">
+                <div class="section-header">
+                    <h1>المنتجات</h1>
+                    <p>إدارة المنتجات وتسعيرها</p>
+                </div>
+                <div class="view-actions">
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" placeholder="بحث عن منتج...">
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('productModal')">
+                        <i class="fa-solid fa-plus"></i> إضافة منتج
+                    </button>
+                </div>
+                <div class="table-container glass-panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>SKU/الباركود</th>
+                                <th>اسم المنتج</th>
+                                <th>الفئة</th>
+                                <th>السعر</th>
+                                <th>المخزون</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body">
+                            <!-- Dynamic data -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Customers View -->
+            <div id="view-customers" class="view-section fade-in" style="display: none;">
+                <div class="section-header">
+                    <h1>العملاء</h1>
+                    <p>إدارة بيانات العملاء والزبائن</p>
+                </div>
+                <div class="view-actions">
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" placeholder="بحث عن عميل...">
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('customerModal')">
+                        <i class="fa-solid fa-plus"></i> إضافة عميل
+                    </button>
+                </div>
+                <div class="table-container glass-panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>اسم العميل</th>
+                                <th>رقم الهاتف</th>
+                                <th>البريد الإلكتروني</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customers-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Suppliers View -->
+            <div id="view-suppliers" class="view-section fade-in" style="display: none;">
+                <div class="section-header">
+                    <h1>الموردين</h1>
+                    <p>إدارة الموردين والشركات</p>
+                </div>
+                <div class="view-actions">
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" placeholder="بحث عن مورد...">
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('supplierModal')">
+                        <i class="fa-solid fa-plus"></i> إضافة مورد
+                    </button>
+                </div>
+                <div class="table-container glass-panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>اسم المورد</th>
+                                <th>رقم الهاتف</th>
+                                <th>البريد الإلكتروني</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="suppliers-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Sales View -->
+            <div id="view-sales" class="view-section fade-in" style="display: none;">
+                <div class="section-header">
+                    <h1>المبيعات</h1>
+                    <p>سجل المبيعات وإصدار الفواتير</p>
+                </div>
+                <div class="view-actions">
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" placeholder="بحث برقم الفاتورة...">
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('saleModal')">
+                        <i class="fa-solid fa-plus"></i> فاتورة بيع جديدة
+                    </button>
+                </div>
+                <div class="table-container glass-panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>رقم الفاتورة</th>
+                                <th>التاريخ</th>
+                                <th>العميل</th>
+                                <th>الإجمالي</th>
+                                <th>حالة الدفع</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sales-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Purchases View -->
+            <div id="view-purchases" class="view-section fade-in" style="display: none;">
+                <div class="section-header">
+                    <h1>المشتريات</h1>
+                    <p>إدارة فواتير المشتريات والتوريد</p>
+                </div>
+                <div class="view-actions">
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" placeholder="بحث...">
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('purchaseModal')">
+                        <i class="fa-solid fa-plus"></i> فاتورة شراء جديدة
+                    </button>
+                </div>
+                <div class="table-container glass-panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>رقم الفاتورة</th>
+                                <th>التاريخ</th>
+                                <th>المورد</th>
+                                <th>الإجمالي</th>
+                                <th>حالة الدفع</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchases-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Returns View -->
+            <div id="view-returns" class="view-section fade-in" style="display: none;">
+                <div class="section-header">
+                    <h1>المرتجعات</h1>
+                    <p>إدارة مرتجعات المبيعات</p>
+                </div>
+                <div class="view-actions">
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" placeholder="بحث...">
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('returnModal')">
+                        <i class="fa-solid fa-plus"></i> إضافة مرتجع
+                    </button>
+                </div>
+                <div class="table-container glass-panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>رقم المرتجع</th>
+                                <th>التاريخ</th>
+                                <th>رقم فاتورة البيع</th>
+                                <th>قيمة المرتجع</th>
+                                <th>السبب</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="returns-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Inventory View -->
+            <div id="view-inventory" class="view-section fade-in" style="display: none;">
+                <div class="section-header">
+                    <h1>المخزون</h1>
+                    <p>مراقبة حركة المخزون والكميات</p>
+                </div>
+                <div class="view-actions">
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" placeholder="بحث في السجل...">
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('inventoryModal')">
+                        <i class="fa-solid fa-dials"></i> تعديل مخزون يدوي
+                    </button>
+                </div>
+                <div class="table-container glass-panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>المنتج</th>
+                                <th>نوع الحركة</th>
+                                <th>الكمية</th>
+                                <th>المخزون السابق</th>
+                                <th>المخزون الحالي</th>
+                                <th>التاريخ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Employees View -->
+            <div id="view-employees" class="view-section fade-in" style="display: none;">
+                <div class="section-header">
+                    <h1>الموظفين</h1>
+                    <p>إدارة بيانات الموظفين والمستخدمين</p>
+                </div>
+                <div class="view-actions">
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" placeholder="بحث عن موظف...">
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('employeeModal')">
+                        <i class="fa-solid fa-plus"></i> إضافة موظف
+                    </button>
+                </div>
+                <div class="table-container glass-panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>اسم الموظف</th>
+                                <th>رقم الهاتف</th>
+                                <th>المسمى الوظيفي</th>
+                                <th>الراتب</th>
+                                <th>تاريخ التوظيف</th>
+                                <th>الحالة</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employees-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Reports View -->
+            <div id="view-reports" class="view-section fade-in" style="display: none;">
+                <div class="section-header">
+                    <h1>التقارير</h1>
+                    <p>تقارير شاملة عن المبيعات والمشتريات والمخزون</p>
+                </div>
+                
+                <div class="reports-grid">
+                    <div class="report-card glass-panel">
+                        <div class="report-header">
+                            <h3><i class="fa-solid fa-chart-line"></i> تقرير المبيعات</h3>
+                            <button class="btn btn-primary btn-sm" onclick="generateSalesReport()">
+                                <i class="fa-solid fa-download"></i> تحميل
+                            </button>
+                        </div>
+                        <div class="report-filters">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>من تاريخ</label>
+                                    <input type="date" id="sales-start-date" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>إلى تاريخ</label>
+                                    <input type="date" id="sales-end-date" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="report-summary">
+                            <div class="summary-item">
+                                <span>إجمالي المبيعات:</span>
+                                <strong id="total-sales">$0.00</strong>
+                            </div>
+                            <div class="summary-item">
+                                <span>عدد الفواتير:</span>
+                                <strong id="total-invoices">0</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="report-card glass-panel">
+                        <div class="report-header">
+                            <h3><i class="fa-solid fa-shopping-cart"></i> تقرير المشتريات</h3>
+                            <button class="btn btn-primary btn-sm" onclick="generatePurchasesReport()">
+                                <i class="fa-solid fa-download"></i> تحميل
+                            </button>
+                        </div>
+                        <div class="report-filters">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>من تاريخ</label>
+                                    <input type="date" id="purchases-start-date" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>إلى تاريخ</label>
+                                    <input type="date" id="purchases-end-date" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="report-summary">
+                            <div class="summary-item">
+                                <span>إجمالي المشتريات:</span>
+                                <strong id="total-purchases">$0.00</strong>
+                            </div>
+                            <div class="summary-item">
+                                <span>عدد الفواتير:</span>
+                                <strong id="total-purchase-invoices">0</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="report-card glass-panel">
+                        <div class="report-header">
+                            <h3><i class="fa-solid fa-boxes-stacked"></i> تقرير المخزون</h3>
+                            <button class="btn btn-primary btn-sm" onclick="generateInventoryReport()">
+                                <i class="fa-solid fa-download"></i> تحميل
+                            </button>
+                        </div>
+                        <div class="report-summary">
+                            <div class="summary-item">
+                                <span>إجمالي المنتجات:</span>
+                                <strong id="total-products">0</strong>
+                            </div>
+                            <div class="summary-item">
+                                <span>منتجات منخفضة المخزون:</span>
+                                <strong id="low-stock-products">0</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Logs View -->
+            <div id="view-activity-logs" class="view-section fade-in" style="display: none;">
+                <div class="section-header">
+                    <h1>سجل الأنشطة</h1>
+                    <p>تتبع جميع العمليات والتغييرات في النظام</p>
+                </div>
+                <div class="view-actions">
+                    <div class="input-group" style="width: 300px;">
+                        <input type="text" placeholder="بحث في السجل...">
+                    </div>
+                    <div class="filter-group">
+                        <select class="custom-select" id="activity-filter">
+                            <option value="">جميع الأنشطة</option>
+                            <option value="product">المنتجات</option>
+                            <option value="sale">المبيعات</option>
+                            <option value="purchase">المشتريات</option>
+                            <option value="inventory">المخزون</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-container glass-panel">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>المستخدم</th>
+                                <th>النشاط</th>
+                                <th>الوصف</th>
+                                <th>النوع</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activity-logs-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Modals (Reusable Layout structure, we will add generic one and manipulate via JS) -->
+    <div id="genericModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">عنوان النافذة</h3>
+                <button class="icon-btn" onclick="closeModal()" style="width: 32px; height: 32px; border:none;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- dynamic form content -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn" style="background: rgba(0,0,0,0.1); color: inherit;" onclick="closeModal()">إلغاء</button>
+                <button class="btn btn-primary" id="modalSaveBtn">حفظ البيانات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="js/session.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/crud.js"></script>
+    <script src="js/integration.js"></script>
+</body>
+</html>

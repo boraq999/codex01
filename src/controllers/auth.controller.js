@@ -10,5 +10,24 @@ module.exports = {
       data,
     });
   }),
+
+  verify: asyncHandler(async (req, res) => {
+    // If we reach here, the auth middleware has already verified the token
+    return sendResponse(res, {
+      message: "Token is valid.",
+      data: {
+        user: req.user,
+        valid: true
+      }
+    });
+  }),
+
+  refresh: asyncHandler(async (req, res) => {
+    const data = await authService.refreshToken(req.user);
+    return sendResponse(res, {
+      message: "Token refreshed successfully.",
+      data,
+    });
+  }),
 };
 

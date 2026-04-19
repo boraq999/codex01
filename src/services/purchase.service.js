@@ -99,9 +99,76 @@ const create = async (payload, userId) => {
   });
 };
 
+const cancel = async (id, userId) => {
+  return withTransaction(async (connection) => {
+    const purchase = await purchaseModel.findById(id);
+    if (!purchase) {
+      throw new AppError("Purchase not found.", 404);
+    }
+
+    if (purchase.status === "cancelled") {
+      throw new AppError("Purchase is already cancelled.", 400);
+    }
+
+    const items = await purchaseItemModel.findByPurchaseId(id);
+
+    for (const item of items) {
+      const product = await productModel.findById(item.product_id);
+      if (!product) continue;
+
+      const stockBefore = product.stock_quantity;
+      const stockAfter = stockBefore - item.quantity;
+
+      if (stockAfter < 0) {
+        throw new AppError(
+          `Cannot cancel: insufficient stock for product ${product.name}.`,
+          400
+        );
+      }
+
+      await productModel.update(
+        product.id,
+        { stock_quantity: stockAfter },
+        connection
+      );
+
+      await inventoryTransactionModel.create(
+        {
+          product_id: product.id,
+          reference_type: "purchase",
+          reference_id: purchase.id,
+          transaction_type: "purchase_in",
+          quantity: -item.quantity,
+          stock_before: stockBefore,
+          stock_after: stockAfter,
+          notes: `Purchase ${purchase.purchase_no} cancelled - stock reversed`,
+          created_by: userId || null,
+        },
+        connection
+      );
+    }
+
+    await purchaseModel.update(id, { status: "cancelled" }, connection);
+
+    await activityLogService.create(
+      {
+        entity_type: "purchase",
+        entity_id: purchase.id,
+        action: "cancelled",
+        description: `Purchase ${purchase.purchase_no} cancelled and inventory reversed.`,
+        performed_by: userId || null,
+      },
+      connection
+    );
+
+    return getById(id);
+  });
+};
+
 module.exports = {
   list,
   getById,
   create,
+  cancel,
 };
 
