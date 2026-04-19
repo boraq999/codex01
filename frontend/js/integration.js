@@ -2,14 +2,13 @@
 class APIManager {
     constructor() {
         this.baseURL = 'http://localhost:4000/api/v1';
-        // Use session manager for authentication
-        this.sessionManager = window.sessionManager;
     }
 
     // Get headers with authentication from session manager
     getHeaders() {
-        if (this.sessionManager && this.sessionManager.isAuthenticated()) {
-            return this.sessionManager.getAuthHeaders();
+        const sessionManager = window.sessionManager;
+        if (sessionManager && sessionManager.isAuthenticated()) {
+            return sessionManager.getAuthHeaders();
         }
         return {
             'Content-Type': 'application/json'
@@ -20,8 +19,11 @@ class APIManager {
     async request(endpoint, options = {}) {
         const url = `${this.baseURL}/${endpoint}`;
         const config = {
-            headers: this.getHeaders(),
-            ...options
+            ...options,
+            headers: {
+                ...this.getHeaders(),
+                ...(options.headers || {})
+            }
         };
 
         try {
@@ -29,8 +31,9 @@ class APIManager {
             
             // Check for authentication errors
             if (response.status === 401) {
-                if (this.sessionManager) {
-                    this.sessionManager.logout();
+                const sessionManager = window.sessionManager;
+                if (sessionManager) {
+                    sessionManager.logout();
                 }
                 throw new Error('Session expired');
             }

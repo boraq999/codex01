@@ -53,7 +53,16 @@ class SessionManager {
         if (!this.token) return true;
         
         try {
-            const payload = JSON.parse(atob(this.token.split('.')[1]));
+            // JWT parts are base64url encoded, which needs adjustment for atob
+            const base64Url = this.token.split('.')[1];
+            if (!base64Url) return true;
+            
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            const payload = JSON.parse(jsonPayload);
             const currentTime = Date.now() / 1000;
             return payload.exp < currentTime;
         } catch (error) {
@@ -320,20 +329,10 @@ class SessionManager {
 }
 
 // Initialize session manager
-let sessionManager;
+const sessionManager = new SessionManager();
+window.sessionManager = sessionManager;
 
-// Wait for DOM to be ready before initializing
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        sessionManager = new SessionManager();
-        window.sessionManager = sessionManager;
-    });
-} else {
-    sessionManager = new SessionManager();
-    window.sessionManager = sessionManager;
-}
-
-// Add logout functionality to the UI
+// Add logout functionality and other DOM-dependent UI updates
 document.addEventListener('DOMContentLoaded', () => {
     // Wait a bit for sessionManager to be ready
     setTimeout(() => {
